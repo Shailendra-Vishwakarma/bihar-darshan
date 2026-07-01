@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($mvn = \"C:\\\\Program Files\\\\JetBrains\\\\IntelliJ IDEA Community Edition 2024.2.4\\\\plugins\\\\maven\\\\lib\\\\maven3\\\\bin\\\\mvn.cmd\"; & $mvn compile -f \"C:\\\\Users\\\\shailendra\\\\claude-learning\\\\bihar-darshan\\\\bihar-darshan-api\\\\pom.xml\" 2>&1 | Select-Object -Last 80)",
+      "PowerShell($mvn = \"C:\\\\Program Files\\\\JetBrains\\\\IntelliJ IDEA Community Edition 2024.2.4\\\\plugins\\\\maven\\\\lib\\\\maven3\\\\bin\\\\mvn.cmd\"; & $mvn spring-boot:run -f \"C:\\\\Users\\\\shailendra\\\\claude-learning\\\\bihar-darshan\\\\bihar-darshan-api\\\\pom.xml\" 2>&1 | Select-Object -Last 50)",
+      "PowerShell($mvn = \"C:\\\\Program Files\\\\JetBrains\\\\IntelliJ IDEA Community Edition 2024.2.4\\\\plugins\\\\maven\\\\lib\\\\maven3\\\\bin\\\\mvn.cmd\"; & $mvn spring-boot:run -f \"C:\\\\Users\\\\shailendra\\\\claude-learning\\\\bihar-darshan\\\\bihar-darshan-api\\\\pom.xml\" 2>&1 | Select-Object -Last 30)",
+      "PowerShell($mvn = \"C:\\\\Program Files\\\\JetBrains\\\\IntelliJ IDEA Community Edition 2024.2.4\\\\plugins\\\\maven\\\\lib\\\\maven3\\\\bin\\\\mvn.cmd\"; & $mvn compile -f \"C:\\\\Users\\\\shailendra\\\\claude-learning\\\\bihar-darshan\\\\bihar-darshan-api\\\\pom.xml\" 2>&1)",
+      "PowerShell($mvn = \"C:\\\\Program Files\\\\JetBrains\\\\IntelliJ IDEA Community Edition 2024.2.4\\\\plugins\\\\maven\\\\lib\\\\maven3\\\\bin\\\\mvn.cmd\"; & $mvn clean compile -f \"C:\\\\Users\\\\shailendra\\\\claude-learning\\\\bihar-darshan\\\\bihar-darshan-api\\\\pom.xml\" 2>&1)",
+      "PowerShell($mvn = \"C:\\\\Program Files\\\\JetBrains\\\\IntelliJ IDEA Community Edition 2024.2.4\\\\plugins\\\\maven\\\\lib\\\\maven3\\\\bin\\\\mvn.cmd\"; & $mvn clean compile -f \"C:\\\\Users\\\\shailendra\\\\claude-learning\\\\bihar-darshan\\\\bihar-darshan-api\\\\pom.xml\" 2>&1 | Select-Object -Last 15)",
+      "PowerShell($mvn = \"C:\\\\Program Files\\\\JetBrains\\\\IntelliJ IDEA Community Edition 2024.2.4\\\\plugins\\\\maven\\\\lib\\\\maven3\\\\bin\\\\mvn.cmd\"; & $mvn clean compile -f \"C:\\\\Users\\\\shailendra\\\\claude-learning\\\\bihar-darshan\\\\bihar-darshan-api\\\\pom.xml\" 2>&1 | Select-Object -Last 10)",
+      "PowerShell($mvn = \"C:\\\\Program Files\\\\JetBrains\\\\IntelliJ IDEA Community Edition 2024.2.4\\\\plugins\\\\maven\\\\lib\\\\maven3\\\\bin\\\\mvn.cmd\"; & $mvn clean spring-boot:run -f \"C:\\\\Users\\\\shailendra\\\\claude-learning\\\\bihar-darshan\\\\bihar-darshan-api\\\\pom.xml\" 2>&1 | Select-Object -Last 20)",
+      "PowerShell($proc = \\(Get-NetTCPConnection -LocalPort 8090 -ErrorAction SilentlyContinue\\).OwningProcess | Select-Object -First 1; if \\($proc\\) { Stop-Process -Id $proc -Force; \"Killed PID $proc\" } else { \"No process on 8090\" })",
+      "PowerShell($mvn = \"C:\\\\Program Files\\\\JetBrains\\\\IntelliJ IDEA Community Edition 2024.2.4\\\\plugins\\\\maven\\\\lib\\\\maven3\\\\bin\\\\mvn.cmd\"; & $mvn spring-boot:run -f \"C:\\\\Users\\\\shailendra\\\\claude-learning\\\\bihar-darshan\\\\bihar-darshan-api\\\\pom.xml\" 2>&1 | Select-Object -Last 15)",
+      "PowerShell($mvn = \"C:\\\\Program Files\\\\JetBrains\\\\IntelliJ IDEA Community Edition 2024.2.4\\\\plugins\\\\maven\\\\lib\\\\maven3\\\\bin\\\\mvn.cmd\"; & $mvn spring-boot:run -f \"C:\\\\Users\\\\shailendra\\\\claude-learning\\\\bihar-darshan\\\\bihar-darshan-api\\\\pom.xml\" 2>&1)",
+      "PowerShell($proc = \\(Get-NetTCPConnection -LocalPort 8090 -ErrorAction SilentlyContinue\\).OwningProcess | Select-Object -First 1; if \\($proc\\) { Stop-Process -Id $proc -Force; \"Killed PID $proc\" } else { \"Port 8090 is free\" })",
+      "PowerShell($mvn = \"C:\\\\Program Files\\\\JetBrains\\\\IntelliJ IDEA Community Edition 2024.2.4\\\\plugins\\\\maven\\\\lib\\\\maven3\\\\bin\\\\mvn.cmd\"; & $mvn spring-boot:run -f \"C:\\\\Users\\\\shailendra\\\\claude-learning\\\\bihar-darshan\\\\bihar-darshan-api\\\\pom.xml\" 2>&1 | Select-Object -Last 10)"
+    ]
+  }
+}
