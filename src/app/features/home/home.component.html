@@ -1,0 +1,99 @@
+<!-- ── Hero ── -->
+<section class="hero d-flex align-items-center">
+  <div class="hero-overlay"></div>
+  <div class="container position-relative py-5 text-white text-center">
+    <p class="hero-eyebrow">Government of Bihar — Tourism Department</p>
+    <h1 class="hero-title">Discover the Soul<br>of <span class="hero-accent">Bihar</span></h1>
+    <p class="hero-sub">Ancient universities · Sacred temples · Pristine forests · Wildlife sanctuaries</p>
+    <div class="row justify-content-center mt-4">
+      <div class="col-md-6">
+        <div class="hero-search d-flex align-items-center">
+          <i class="bi bi-search text-muted me-2"></i>
+          <input #hs type="text" placeholder="Search a place or district..."
+            (keyup.enter)="searchFromHero(hs.value)" class="flex-grow-1" />
+          <button (click)="searchFromHero(hs.value)">Search</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Stats ── -->
+<section class="stats-bar">
+  <div class="container">
+    <div class="row text-center g-0">
+      <div class="col-6 col-md-3 stat-item">
+        <div class="stat-num">38</div>
+        <div class="stat-label">Districts</div>
+      </div>
+      <div class="col-6 col-md-3 stat-item">
+        <div class="stat-num">12+</div>
+        <div class="stat-label">Tourist Places</div>
+      </div>
+      <div class="col-6 col-md-3 stat-item">
+        <div class="stat-num">5</div>
+        <div class="stat-label">Categories</div>
+      </div>
+      <div class="col-6 col-md-3 stat-item">
+        <div class="stat-num">2</div>
+        <div class="stat-label">UNESCO Sites</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Categories ── -->
+<section class="py-5" style="background:var(--surface);">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="section-heading center">Browse by Category</h2>
+      <p class="text-muted mt-3">Find your perfect destination across Bihar</p>
+    </div>
+    <div class="row g-3 justify-content-center">
+      <div class="col-6 col-sm-4 col-md-2" *ngFor="let cat of categories">
+        <div class="category-card card border-0 text-center p-3 h-100" (click)="goToCategory(cat.name)" style="cursor:pointer;">
+          <div class="cat-icon mx-auto">
+            <i class="bi {{ cat.icon }}"></i>
+          </div>
+          <p class="fw-semibold mb-0 mt-2" style="font-size:0.875rem; color:var(--text-dark);">{{ cat.name }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Featured Places ── -->
+<section class="py-5" style="background:var(--surface-alt);">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-end mb-5">
+      <div>
+        <h2 class="section-heading mb-0">Featured Places</h2>
+        <p class="text-muted mt-2 mb-0">Hand-picked destinations worth visiting</p>
+      </div>
+      <a routerLink="/places" class="btn-primary-custom btn">
+        View All <i class="bi bi-arrow-right ms-1"></i>
+      </a>
+    </div>
+    <div class="row g-4">
+      <div class="col-sm-6 col-lg-4" *ngFor="let place of featured">
+        <app-place-card [place]="place"></app-place-card>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta-section text-white text-center py-5">
+  <div class="cta-overlay"></div>
+  <div class="container position-relative py-3">
+    <p class="cta-eyebrow">Bihar Tourism Incentive Scheme</p>
+    <h2 class="cta-title">Visited a Tourist Spot?</h2>
+    <p class="cta-sub">Generate your official visit report and submit to the commissioner to claim your tourism incentive.</p>
+    <a routerLink="/report" class="btn-accent btn btn-lg me-3">
+      <i class="bi bi-file-earmark-text me-2"></i>Generate Report
+    </a>
+    <a routerLink="/places" class="btn btn-lg btn-outline-light">
+      Explore Places
+    </a>
+  </div>
+</section>

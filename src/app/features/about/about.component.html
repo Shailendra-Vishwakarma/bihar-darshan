@@ -1,0 +1,84 @@
+<div class="page-header">
+  <div class="container">
+    <h2><i class="bi bi-info-circle me-2"></i>About Bihar</h2>
+    <p>The land of enlightenment, history, and living culture</p>
+  </div>
+</div>
+
+<div class="container py-5">
+
+  <!-- Intro -->
+  <div class="row g-5 align-items-center mb-5">
+    <div class="col-lg-6">
+      <h2 class="section-heading mb-4">Bihar — Where History Breathes</h2>
+      <p style="color:var(--text-body); line-height:1.85;">Bihar is one of India's oldest and most historically significant states, located in eastern India. With a civilisation spanning over 3,000 years, it has been the birthplace of two world religions — Buddhism and Jainism — and the seat of the mighty Mauryan and Gupta empires.</p>
+      <p style="color:var(--text-body); line-height:1.85;">From the ruins of Nalanda University to the sacred Bodhi Tree at Bodh Gaya, Bihar invites you to walk through living history.</p>
+    </div>
+    <div class="col-lg-6">
+      <div class="row g-3">
+        <div class="col-6"><div class="stat-box" style="background:var(--primary); color:#fff;"><div class="stat-box-num">3000+</div><div class="stat-box-label">Years of History</div></div></div>
+        <div class="col-6"><div class="stat-box" style="background:var(--accent); color:#fff;"><div class="stat-box-num">38</div><div class="stat-box-label">Districts</div></div></div>
+        <div class="col-6"><div class="stat-box" style="background:var(--surface-alt); color:var(--primary);"><div class="stat-box-num">130M+</div><div class="stat-box-label">Population</div></div></div>
+        <div class="col-6"><div class="stat-box" style="background:var(--surface-alt); color:var(--primary);"><div class="stat-box-num">2</div><div class="stat-box-label">UNESCO Sites</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History -->
+  <div class="card border-0 p-4 p-md-5 mb-4">
+    <h4 class="section-heading mb-4">Historical Significance</h4>
+    <div class="row g-4">
+      <div class="col-md-6" *ngFor="let h of history">
+        <div class="history-item">
+          <h6 class="fw-bold mb-2" style="color:var(--primary);">{{ h.title }}</h6>
+          <p class="mb-0" style="color:var(--text-muted); font-size:0.9rem; line-height:1.75;">{{ h.text }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Culture -->
+  <div class="card border-0 p-4 p-md-5 mb-4">
+    <h4 class="section-heading mb-4">Culture & Art</h4>
+    <div class="row g-4">
+      <div class="col-sm-6 col-md-3" *ngFor="let c of culture">
+        <div class="culture-card text-center p-4 h-100">
+          <div class="culture-icon mb-3"><i class="bi {{ c.icon }}"></i></div>
+          <h6 class="fw-bold mb-2" style="color:var(--primary);">{{ c.name }}</h6>
+          <p class="mb-0" style="font-size:0.82rem; color:var(--text-muted); line-height:1.65;">{{ c.desc }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Festivals -->
+  <div class="card border-0 p-4 p-md-5 mb-4">
+    <h4 class="section-heading mb-4">Major Festivals</h4>
+    <div class="row g-3">
+      <div class="col-sm-6 col-md-4" *ngFor="let fest of festivals">
+        <div class="festival-item d-flex gap-3 align-items-start p-3 rounded">
+          <span class="fest-emoji">{{ fest.icon }}</span>
+          <div>
+            <h6 class="fw-bold mb-1" style="color:var(--primary); font-size:0.9rem;">{{ fest.name }}</h6>
+            <p class="mb-0" style="font-size:0.82rem; color:var(--text-muted); line-height:1.6;">{{ fest.desc }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Food -->
+  <div class="card border-0 p-4 p-md-5">
+    <h4 class="section-heading mb-4">Famous Food</h4>
+    <div class="row g-3">
+      <div class="col-sm-6 col-md-3" *ngFor="let food of foods">
+        <div class="food-card text-center p-3 rounded h-100">
+          <div class="food-emoji">{{ food.emoji }}</div>
+          <h6 class="fw-bold mt-2 mb-1" style="color:var(--primary); font-size:0.88rem;">{{ food.name }}</h6>
+          <p class="mb-0" style="font-size:0.8rem; color:var(--text-muted);">{{ food.desc }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

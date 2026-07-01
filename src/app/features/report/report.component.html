@@ -1,0 +1,302 @@
+<div class="page-header">
+  <div class="container">
+    <h2><i class="bi bi-file-earmark-text me-2"></i>Generate Report</h2>
+    <p>Generate an official visit report for Bihar Government Tourism Incentive Scheme</p>
+  </div>
+</div>
+
+<div class="container py-5">
+
+  <!-- Step Indicator -->
+  <div class="d-flex align-items-center justify-content-center gap-0 mb-5">
+    <div class="step-pill" [class.active]="step >= 1" [class.done]="step > 1">
+      <span class="step-num">1</span>
+      <span class="step-label">Fill Details</span>
+    </div>
+    <div class="step-line" [class.active]="step > 1"></div>
+    <div class="step-pill" [class.active]="step >= 2">
+      <span class="step-num">2</span>
+      <span class="step-label">Preview & Submit</span>
+    </div>
+  </div>
+
+  <!-- ── STEP 1 ── -->
+  <div *ngIf="step === 1">
+    <form [formGroup]="form" (ngSubmit)="nextStep()" novalidate>
+      <div class="row g-4">
+
+        <!-- Personal Details -->
+        <div class="col-lg-6">
+          <div class="card border-0 p-4 p-md-5 h-100">
+            <h5 class="form-section-title mb-4">
+              <i class="bi bi-person-badge me-2"></i>Personal Details
+            </h5>
+            <div class="mb-3">
+              <label class="form-label">Full Name <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="fullName" placeholder="As on Aadhaar card"
+                [class.is-invalid]="submitted && f['fullName'].errors">
+              <div class="invalid-feedback">
+                <span *ngIf="f['fullName'].errors?.['required']">Name is required.</span>
+                <span *ngIf="f['fullName'].errors?.['minlength']">Minimum 3 characters.</span>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Aadhaar Number <span class="text-danger">*</span></label>
+              <input type="text" class="form-control" formControlName="aadhaar" placeholder="12-digit Aadhaar number"
+                maxlength="12" [class.is-invalid]="submitted && f['aadhaar'].errors">
+              <div class="invalid-feedback">Enter a valid 12-digit Aadhaar number.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Phone Number <span class="text-danger">*</span></label>
+              <input type="tel" class="form-control" formControlName="phone" placeholder="10-digit mobile number"
+                maxlength="10" [class.is-invalid]="submitted && f['phone'].errors">
+              <div class="invalid-feedback">Enter a valid 10-digit phone number.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email Address <span class="text-danger">*</span></label>
+              <input type="email" class="form-control" formControlName="email" placeholder="your@email.com"
+                [class.is-invalid]="submitted && f['email'].errors">
+              <div class="invalid-feedback">Enter a valid email address.</div>
+            </div>
+            <div class="mb-0">
+              <label class="form-label">Residential Address <span class="text-danger">*</span></label>
+              <textarea class="form-control" rows="2" formControlName="address" placeholder="Full residential address"
+                [class.is-invalid]="submitted && f['address'].errors"></textarea>
+              <div class="invalid-feedback">Address is required.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visit Details + Photos -->
+        <div class="col-lg-6">
+          <div class="card border-0 p-4 p-md-5 mb-4">
+            <h5 class="form-section-title mb-4">
+              <i class="bi bi-geo-alt me-2"></i>Visit Details
+            </h5>
+            <div class="mb-3">
+              <label class="form-label">Tourist Place <span class="text-danger">*</span></label>
+              <select class="form-select" formControlName="placeId"
+                (change)="onPlaceChange(f['placeId'].value)"
+                [class.is-invalid]="submitted && f['placeId'].errors">
+                <option value="">— Select place visited —</option>
+                <option *ngFor="let p of places" [value]="p.id">{{ p.name }} ({{ p.district }})</option>
+              </select>
+              <div class="invalid-feedback">Please select the place you visited.</div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Date of Visit <span class="text-danger">*</span></label>
+              <input type="date" class="form-control" formControlName="visitDate"
+                [class.is-invalid]="submitted && f['visitDate'].errors">
+              <div class="invalid-feedback">Visit date is required.</div>
+            </div>
+            <div class="mb-0">
+              <label class="form-label">Purpose of Visit <span class="text-danger">*</span></label>
+              <select class="form-select" formControlName="visitPurpose"
+                [class.is-invalid]="submitted && f['visitPurpose'].errors">
+                <option value="">— Select purpose —</option>
+                <option>Religious / Pilgrimage</option>
+                <option>Historical / Educational</option>
+                <option>Nature / Recreation</option>
+                <option>Wildlife Safari</option>
+                <option>Photography / Tourism</option>
+                <option>Family Trip</option>
+                <option>Research / Study</option>
+              </select>
+              <div class="invalid-feedback">Purpose is required.</div>
+            </div>
+          </div>
+
+          <!-- Photo Upload -->
+          <div class="card border-0 p-4 p-md-5">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <h5 class="form-section-title mb-0">
+                <i class="bi bi-images me-2"></i>Upload Photos
+              </h5>
+              <span class="upload-counter" [class.full]="uploadedImages.length >= maxImages">
+                {{ uploadedImages.length }} / {{ maxImages }}
+              </span>
+            </div>
+            <p style="color:var(--text-muted); font-size:0.82rem;" class="mb-3 mt-1">
+              Upload selfies or photos taken at the place. Max {{ maxImages }} images.
+            </p>
+
+            <label class="upload-zone d-block text-center p-4 mb-3"
+              [class.disabled]="uploadedImages.length >= maxImages">
+              <input type="file" accept="image/*" multiple class="d-none"
+                [disabled]="uploadedImages.length >= maxImages"
+                (change)="onImagesUpload($event)">
+              <i class="bi bi-cloud-arrow-up upload-zone-icon"></i>
+              <p class="mb-0 fw-semibold mt-2" style="font-size:0.875rem; color:var(--text-muted);">
+                {{ uploadedImages.length >= maxImages ? 'Maximum images reached' : 'Click to add photos' }}
+              </p>
+              <p class="mb-0 mt-1" style="font-size:0.78rem; color:var(--text-muted);">JPG, PNG, WEBP — select multiple at once</p>
+            </label>
+
+            <div *ngIf="uploadError" class="upload-error mb-3">
+              <i class="bi bi-exclamation-triangle me-1"></i>{{ uploadError }}
+            </div>
+
+            <div class="row g-2" *ngIf="uploadedImages.length > 0">
+              <div class="col-4" *ngFor="let img of uploadedImages; let i = index">
+                <div class="thumb-wrap position-relative">
+                  <img [src]="img.base64" [alt]="img.name" class="w-100 rounded" style="height:80px; object-fit:cover;">
+                  <button type="button" class="thumb-remove" (click)="removeImage(i)">
+                    <i class="bi bi-x"></i>
+                  </button>
+                  <div class="thumb-num">{{ i + 1 }}</div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="submitted && uploadedImages.length === 0" class="upload-error mt-2">
+              <i class="bi bi-exclamation-circle me-1"></i>Please upload at least one photo.
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 text-end">
+          <button type="submit" class="btn btn-primary-custom btn-lg px-5">
+            Preview Report <i class="bi bi-arrow-right ms-2"></i>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- ── STEP 2 ── -->
+  <div *ngIf="step === 2">
+
+    <div class="alert alert-success d-flex align-items-center gap-2 mb-4" *ngIf="emailSent">
+      <i class="bi bi-check-circle-fill fs-5"></i>
+      <span>Email client opened. Please <strong>attach the downloaded PDF</strong> and send to complete your submission.</span>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center mb-4">
+      <button class="btn" style="border:1.5px solid var(--border); color:var(--text-dark);" (click)="prevStep()">
+        <i class="bi bi-arrow-left me-1"></i>Edit Details
+      </button>
+      <div class="d-flex flex-wrap gap-2">
+        <button class="btn btn-primary-custom" (click)="downloadPdf()" [disabled]="generatingPdf">
+          <span *ngIf="generatingPdf" class="spinner-border spinner-border-sm me-2"></span>
+          <i *ngIf="!generatingPdf" class="bi bi-download me-2"></i>
+          {{ generatingPdf ? 'Generating...' : 'Download PDF' }}
+        </button>
+        <button class="btn btn-accent" (click)="sendEmail()">
+          <i class="bi bi-envelope-arrow-up me-2"></i>Submit via Email
+        </button>
+        <button class="btn" style="border:1.5px solid var(--border); color:var(--text-dark);" (click)="reset()">
+          <i class="bi bi-plus-circle me-1"></i>New Report
+        </button>
+      </div>
+    </div>
+
+    <!-- ═══ REPORT DOCUMENT ═══ -->
+    <div #reportPreview class="report-doc mx-auto" style="max-width:780px;">
+
+      <!-- Header -->
+      <div class="report-header">
+        <div class="d-flex align-items-start justify-content-between flex-wrap gap-3">
+          <div>
+            <div class="report-gov">Government of Bihar &nbsp;·&nbsp; Tourism Department</div>
+            <h3 class="report-title">Bihar Tourism Incentive Scheme</h3>
+            <div class="report-sub">Tourist Visit Verification Report</div>
+          </div>
+          <div class="text-end">
+            <div class="report-id-badge">{{ reportId }}</div>
+            <div class="report-date mt-1">Generated: {{ today() }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="report-body">
+
+        <!-- Visitor + Photo -->
+        <div class="row g-4 mb-4">
+          <div class="col-8">
+            <div class="report-section-title">Visitor Information</div>
+            <table class="report-table">
+              <tr><td>Full Name</td><td><strong>{{ form.value.fullName }}</strong></td></tr>
+              <tr><td>Aadhaar No.</td><td>XXXX-XXXX-{{ form.value.aadhaar?.slice(-4) }}</td></tr>
+              <tr><td>Phone</td><td>{{ form.value.phone }}</td></tr>
+              <tr><td>Email</td><td>{{ form.value.email }}</td></tr>
+              <tr><td>Address</td><td>{{ form.value.address }}</td></tr>
+            </table>
+          </div>
+          <div class="col-4 text-center">
+            <div class="report-section-title">Visitor Photo</div>
+            <img [src]="uploadedImages[0].base64" alt="Visitor Photo" class="report-photo">
+            <div class="report-photo-label">Self-attested</div>
+          </div>
+        </div>
+
+        <div class="report-divider"></div>
+
+        <!-- Visit Details -->
+        <div class="mb-4">
+          <div class="report-section-title">Visit Details</div>
+          <div class="row g-3 mt-1">
+            <div class="col-sm-6"><div class="report-info-box"><div class="rib-label">Tourist Place</div><div class="rib-value">{{ selectedPlace?.name }}</div></div></div>
+            <div class="col-sm-6"><div class="report-info-box"><div class="rib-label">District</div><div class="rib-value">{{ selectedPlace?.district }}, Bihar</div></div></div>
+            <div class="col-sm-4"><div class="report-info-box"><div class="rib-label">Category</div><div class="rib-value">{{ selectedPlace?.category }}</div></div></div>
+            <div class="col-sm-4"><div class="report-info-box"><div class="rib-label">Date of Visit</div><div class="rib-value">{{ form.value.visitDate | date:'dd MMM yyyy' }}</div></div></div>
+            <div class="col-sm-4"><div class="report-info-box"><div class="rib-label">Purpose</div><div class="rib-value">{{ form.value.visitPurpose }}</div></div></div>
+          </div>
+        </div>
+
+        <div class="report-divider"></div>
+
+        <!-- Photos -->
+        <div class="mb-4">
+          <div class="report-section-title">
+            Visit Photos
+            <span class="report-photo-count">({{ uploadedImages.length }} image{{ uploadedImages.length > 1 ? 's' : '' }} submitted as evidence)</span>
+          </div>
+          <div class="row g-3 mt-1">
+            <div *ngFor="let img of uploadedImages; let i = index"
+              [class]="uploadedImages.length === 1 ? 'col-12' : uploadedImages.length === 2 ? 'col-6' : 'col-sm-6 col-md-4'">
+              <img [src]="img.base64" [alt]="'Photo '+(i+1)"
+                class="w-100 rounded" style="height:175px; object-fit:cover; border:1px solid var(--border);">
+              <div class="report-photo-label">Photo {{ i+1 }} of {{ uploadedImages.length }}</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="report-divider"></div>
+
+        <!-- Declaration -->
+        <div class="mb-4">
+          <div class="report-section-title">Declaration</div>
+          <p class="report-declaration mt-2">
+            I, <strong>{{ form.value.fullName }}</strong>, hereby declare that the information provided in this report is true and accurate to the best of my knowledge. I have personally visited <strong>{{ selectedPlace?.name }}</strong>, {{ selectedPlace?.district }} on <strong>{{ form.value.visitDate | date:'dd MMM yyyy' }}</strong>. The {{ uploadedImages.length }} photograph(s) attached herein are authentic and taken at the said location. I understand that submitting false information is a punishable offence under applicable law.
+          </p>
+        </div>
+
+        <!-- Signatures -->
+        <div class="row g-3">
+          <div class="col-6">
+            <div class="sig-box text-center">
+              <div style="height:48px;"></div>
+              <div class="sig-line">Visitor's Signature</div>
+              <div class="sig-name">{{ form.value.fullName }}</div>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="sig-box text-center">
+              <div style="height:48px;"></div>
+              <div class="sig-line">Commissioner's Signature & Stamp</div>
+              <div class="sig-name">Bihar Tourism Department</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="report-footer">
+        Bihar State Tourism Development Corporation &nbsp;·&nbsp; Birchand Patel Marg, Patna – 800001
+        &nbsp;·&nbsp; tourism.bihar.gov.in &nbsp;·&nbsp; <strong>{{ reportId }}</strong>
+      </div>
+
+    </div>
+  </div>
+</div>

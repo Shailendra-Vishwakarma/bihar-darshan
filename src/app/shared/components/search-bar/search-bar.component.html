@@ -1,0 +1,13 @@
+<div class="search-wrap d-flex align-items-center">
+  <i class="bi bi-search search-icon"></i>
+  <input
+    type="text"
+    class="search-input"
+    placeholder="Search places, districts, categories..."
+    [(ngModel)]="keyword"
+    (ngModelChange)="onInput($event)"
+  />
+  <button *ngIf="keyword" class="search-clear" type="button" (click)="clear()">
+    <i class="bi bi-x-lg"></i>
+  </button>
+</div>
