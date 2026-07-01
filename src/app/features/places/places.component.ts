@@ -10,50 +10,36 @@ import { PlaceService } from '../../services/place.service';
   styleUrl: './places.component.scss'
 })
 export class PlacesComponent implements OnInit {
-  allPlaces: TouristPlace[] = [];
-  filteredPlaces: TouristPlace[] = [];
+  places: TouristPlace[] = [];
+  loading = false;
   searchKeyword = '';
   selectedCategory = 'All';
 
   constructor(private placeService: PlaceService, private route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.allPlaces = this.placeService.getAllPlaces();
     this.route.queryParams.subscribe(params => {
-      if (params['category']) {
-        this.selectedCategory = params['category'];
-      }
-      if (params['q']) {
-        this.searchKeyword = params['q'];
-      }
-      this.applyFilters();
+      if (params['category']) this.selectedCategory = params['category'];
+      if (params['q']) this.searchKeyword = params['q'];
+      this.loadPlaces();
     });
   }
 
   onSearch(keyword: string) {
     this.searchKeyword = keyword;
-    this.applyFilters();
+    this.loadPlaces();
   }
 
   onCategoryChange(category: string) {
     this.selectedCategory = category;
-    this.applyFilters();
+    this.loadPlaces();
   }
 
-  applyFilters() {
-    let result = this.allPlaces;
-    if (this.selectedCategory && this.selectedCategory !== 'All') {
-      result = result.filter(p => p.category === this.selectedCategory);
-    }
-    if (this.searchKeyword.trim()) {
-      const kw = this.searchKeyword.toLowerCase();
-      result = result.filter(p =>
-        p.name.toLowerCase().includes(kw) ||
-        p.district.toLowerCase().includes(kw) ||
-        p.category.toLowerCase().includes(kw) ||
-        p.description.toLowerCase().includes(kw)
-      );
-    }
-    this.filteredPlaces = result;
+  private loadPlaces() {
+    this.loading = true;
+    this.placeService.getAllPlaces(this.selectedCategory, this.searchKeyword).subscribe({
+      next: places => { this.places = places; this.loading = false; },
+      error: () => { this.loading = false; }
+    });
   }
 }

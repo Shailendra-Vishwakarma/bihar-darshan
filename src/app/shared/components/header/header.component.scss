@@ -1,0 +1,31 @@
+.btn-accent-nav {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 18px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s;
+
+  &:hover { background: var(--accent-dark); color: #fff; }
+}
+
+.user-menu {
+  font-weight: 600;
+}
+
+.dropdown-menu {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  padding: 6px;
+
+  .dropdown-item {
+    border-radius: 6px;
+    font-size: 0.875rem;
+    padding: 8px 12px;
+    &:hover { background: var(--surface-alt); }
+  }
+}

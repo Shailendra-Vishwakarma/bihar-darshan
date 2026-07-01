@@ -24,6 +24,40 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact</a>
         </li>
+
+        <!-- Logged out -->
+        <ng-container *ngIf="!authService.isLoggedIn()">
+          <li class="nav-item ms-lg-2">
+            <a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a>
+          </li>
+          <li class="nav-item">
+            <a routerLink="/register" class="btn btn-accent-nav ms-lg-1">Register</a>
+          </li>
+        </ng-container>
+
+        <!-- Logged in -->
+        <ng-container *ngIf="authService.isLoggedIn()">
+          <li class="nav-item ms-lg-2">
+            <a class="nav-link" routerLink="/favorites" routerLinkActive="active">
+              <i class="bi bi-heart-fill me-1" style="color:#ef4444;"></i>Favorites
+            </a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle user-menu" href="#" role="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle me-1"></i>{{ authService.getCurrentUser()?.username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" routerLink="/favorites">
+                <i class="bi bi-heart me-2"></i>My Favorites
+              </a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><button class="dropdown-item text-danger" (click)="logout()">
+                <i class="bi bi-box-arrow-right me-2"></i>Logout
+              </button></li>
+            </ul>
+          </li>
+        </ng-container>
       </ul>
     </div>
   </div>

@@ -29,7 +29,7 @@ export class ReportComponent {
   uploadError = '';
 
   constructor(private fb: FormBuilder, private placeService: PlaceService) {
-    this.places = this.placeService.getAllPlaces();
+    this.placeService.getAllPlaces().subscribe({ next: places => { this.places = places; } });
     this.reportId = 'BDR-' + Date.now().toString(36).toUpperCase();
 
     this.form = this.fb.group({
@@ -47,7 +47,10 @@ export class ReportComponent {
   get f() { return this.form.controls; }
 
   onPlaceChange(id: string) {
-    this.selectedPlace = this.placeService.getPlaceById(Number(id)) ?? null;
+    this.placeService.getPlaceById(Number(id)).subscribe({
+      next: place => { this.selectedPlace = place; },
+      error: () => { this.selectedPlace = null; }
+    });
   }
 
   onImagesUpload(event: Event) {

@@ -1,0 +1,32 @@
+<div class="page-header">
+  <div class="container">
+    <h2><i class="bi bi-heart-fill me-2"></i>My Favorites</h2>
+    <p>Places you've saved for later</p>
+  </div>
+</div>
+
+<div class="container py-5">
+  <div *ngIf="loading" class="text-center py-5">
+    <div class="spinner-border" style="color:var(--primary);"></div>
+  </div>
+
+  <div class="row g-4" *ngIf="!loading && places.length > 0">
+    <div class="col-sm-6 col-lg-4" *ngFor="let place of places">
+      <div class="position-relative">
+        <app-place-card [place]="place"></app-place-card>
+        <button class="btn btn-sm remove-fav" (click)="remove(place.id)" title="Remove from favorites">
+          <i class="bi bi-heart-fill"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && places.length === 0" class="text-center py-5">
+    <i class="bi bi-heart display-1" style="color:var(--border);"></i>
+    <h4 class="mt-4" style="color:var(--text-muted);">No favorites yet</h4>
+    <p style="color:var(--text-muted);">Click the heart icon on any place to save it here.</p>
+    <a routerLink="/places" class="btn mt-2" style="background:var(--primary);color:#fff;border-radius:10px;padding:10px 28px;">
+      Explore Places
+    </a>
+  </div>
+</div>

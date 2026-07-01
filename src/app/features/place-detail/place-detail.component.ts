@@ -20,10 +20,10 @@ export class PlaceDetailComponent implements OnInit {
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.place = this.placeService.getPlaceById(id);
-    if (!this.place) {
-      this.router.navigate(['/places']);
-    }
+    this.placeService.getPlaceById(id).subscribe({
+      next: place => { this.place = place; },
+      error: () => { this.router.navigate(['/places']); }
+    });
   }
 
   categoryBadgeClass(): string {

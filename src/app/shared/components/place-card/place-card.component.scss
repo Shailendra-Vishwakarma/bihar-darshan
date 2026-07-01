@@ -3,3 +3,21 @@
 .badge-nature     { background: #14532D; color: #D1FAE5; }
 .badge-wildlife   { background: #0C4A6E; color: #E0F2FE; }
 .badge-adventure  { background: #1E3A5F; color: #DBEAFE; }
+
+.fav-btn {
+  background: rgba(15,30,51,0.55);
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+  padding: 0;
+
+  &:hover { background: rgba(15,30,51,0.8); }
+  &:disabled { opacity: 0.7; cursor: not-allowed; }
+}

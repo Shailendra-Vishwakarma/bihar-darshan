@@ -23,7 +23,10 @@ export class HomeComponent implements OnInit {
   constructor(private placeService: PlaceService, private router: Router) {}
 
   ngOnInit() {
-    this.featured = this.placeService.getFeatured();
+    this.placeService.getFeatured().subscribe({
+      next: places => { this.featured = places.slice(0, 6); },
+      error: () => {}
+    });
   }
 
   goToCategory(cat: string) {
