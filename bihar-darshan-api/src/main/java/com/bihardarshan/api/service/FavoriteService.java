@@ -8,6 +8,7 @@ import com.bihardarshan.api.repository.PlaceRepository;
 import com.bihardarshan.api.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class FavoriteService {
     private final UserRepository userRepository;
     private final PlaceRepository placeRepository;
 
+    @Transactional(readOnly = true)
     public List<Place> getFavorites(String email) {
         User user = findUser(email);
         return favoriteRepository.findByUserId(user.getId())

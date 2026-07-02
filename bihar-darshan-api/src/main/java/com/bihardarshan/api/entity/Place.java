@@ -32,7 +32,7 @@ public class Place {
     @Column(nullable = false)
     private String imageUrl;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "place_images", joinColumns = @JoinColumn(name = "place_id"))
     @Column(name = "image_url")
     private List<String> images;
@@ -46,7 +46,7 @@ public class Place {
     @Column(nullable = false, length = 100)
     private String timings;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "place_nearby", joinColumns = @JoinColumn(name = "place_id"))
     @Column(name = "attraction")
     private List<String> nearbyAttractions;
