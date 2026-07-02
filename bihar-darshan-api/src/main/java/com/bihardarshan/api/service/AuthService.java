@@ -41,7 +41,8 @@ public class AuthService {
 
     public AuthResponse login(LoginRequest req) {
         authManager.authenticate(new UsernamePasswordAuthenticationToken(req.email(), req.password()));
-        User user = userRepository.findByEmail(req.email()).orElseThrow();
+        User user = userRepository.findByEmail(req.email())
+                .orElseThrow(() -> new org.springframework.security.core.userdetails.UsernameNotFoundException("User not found: " + req.email()));
         String token = jwtUtil.generate(user.getEmail());
         return new AuthResponse(token, user.getUsername(), user.getEmail());
     }
