@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { PlaceService } from '../../services/place.service';
+import { ReportService } from '../../services/report.service';
 import { TouristPlace } from '../../models/tourist-place.model';
 
 const MAX_IMAGES = 5;
@@ -27,8 +28,9 @@ export class ReportComponent {
   generatingPdf = false;
   emailSent = false;
   uploadError = '';
+  reportSaved = false;
 
-  constructor(private fb: FormBuilder, private placeService: PlaceService) {
+  constructor(private fb: FormBuilder, private placeService: PlaceService, private reportService: ReportService) {
     this.placeService.getAllPlaces().subscribe({ next: places => { this.places = places; } });
     this.reportId = 'BDR-' + Date.now().toString(36).toUpperCase();
 
@@ -104,10 +106,35 @@ export class ReportComponent {
     const pdfH = (canvas.height * pdfW) / canvas.width;
     pdf.addImage(imgData, 'PNG', 0, 0, pdfW, pdfH);
     pdf.save(`Bihar-Visit-Report-${this.reportId}.pdf`);
+
+    const pdfBase64 = pdf.output('datauristring');
+    this.saveReport(pdfBase64);
     this.generatingPdf = false;
   }
 
+  private saveReport(pdfBase64: string) {
+    if (this.reportSaved) return;
+    const v = this.form.value;
+    this.reportService.save({
+      reportId:     this.reportId,
+      fullName:     v.fullName,
+      aadhaar:      v.aadhaar,
+      phone:        v.phone,
+      email:        v.email,
+      address:      v.address,
+      placeId:      Number(v.placeId),
+      visitDate:    v.visitDate,
+      visitPurpose: v.visitPurpose,
+      pdfBase64,
+      images:       this.uploadedImages.map(i => i.base64),
+    }).subscribe({ next: () => { this.reportSaved = true; } });
+  }
+
   sendEmail() {
+    if (!this.reportSaved) {
+      const pdfBase64 = '';
+      this.saveReport(pdfBase64);
+    }
     const v = this.form.value;
     const place = this.selectedPlace;
     const subject = encodeURIComponent(`Bihar Tourism Visit Report — ${this.reportId}`);
@@ -146,6 +173,7 @@ This report is submitted for verification under Bihar Government Tourism Incenti
     this.uploadedImages = [];
     this.uploadError = '';
     this.emailSent = false;
+    this.reportSaved = false;
     this.reportId = 'BDR-' + Date.now().toString(36).toUpperCase();
   }
 }
